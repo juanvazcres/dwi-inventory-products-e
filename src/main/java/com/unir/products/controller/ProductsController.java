@@ -34,12 +34,12 @@ public class ProductsController {
 	public ResponseEntity<ProductsQueryResponse> getProducts(
 			@RequestHeader Map<String, String> headers,
 			@RequestParam(required = false) String description, 
-			@RequestParam(required = false) String name, 
-			@RequestParam(required = false) String country,
+			@RequestParam(required = false) String title, 
+			@RequestParam(required = false) String category,
 			@RequestParam(required = false, defaultValue = "false") Boolean aggregate) {
 
 		log.info("headers: {}", headers);
-		ProductsQueryResponse products = service.getProducts(name, description, country, aggregate);
+		ProductsQueryResponse products = service.getProducts(title, description, category, aggregate);
 		return ResponseEntity.ok(products);
 	}
 

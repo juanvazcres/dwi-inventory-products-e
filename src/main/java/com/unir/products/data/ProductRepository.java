@@ -8,7 +8,7 @@ import com.unir.products.model.db.Product;
 
 public interface ProductRepository extends ElasticsearchRepository<Product, String> {
 
-	List<Product> findByName(String name);
+	List<Product> findByTitle(String title);
 	
 	Optional<Product> findById(String id);
 	

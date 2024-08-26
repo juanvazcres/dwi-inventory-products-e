@@ -16,9 +16,9 @@ public class ProductsServiceImpl implements ProductsService {
 	private final DataAccessRepository repository;
 
 	@Override
-	public ProductsQueryResponse getProducts(String name, String description, String country, Boolean aggregate) {
+	public ProductsQueryResponse getProducts(String title, String category, String description, Boolean aggregate) {
 		//Ahora por defecto solo devolvera productos visibles
-		return repository.findProducts(name, description, country, aggregate);
+		return repository.findProducts(title, description, category, aggregate);
 	}
 
 	@Override

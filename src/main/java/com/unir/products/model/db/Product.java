@@ -23,17 +23,20 @@ public class Product {
 	
 	@Id
 	private String id;
-	
-	@Field(type = FieldType.Text, name = "name")
-	private String name;
-	
-	@Field(type = FieldType.Keyword, name = "country")
-	private String country;
-	
-	@Field(type = FieldType.Search_As_You_Type, name = "description")
+
+	@Column(name = "title", unique = true)
+	private String title;
+
+	@Column(name = "price")
+	private Double price;
+
+	@Column(name = "description")
 	private String description;
-	
-	@Field(type = FieldType.Boolean, name = "visible")
-	private Boolean visible;
+
+	@Column(name = "category")
+	private String category;
+
+	@Column(name = "image")
+	private String image;
 
 }

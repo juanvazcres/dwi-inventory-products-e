@@ -53,16 +53,16 @@ public class DataAccessRepository {
 	}
 
     @SneakyThrows
-    public ProductsQueryResponse findProducts(String name, String description, String country, Boolean aggregate) {
+    public ProductsQueryResponse findProducts(String title, String category, String description, Boolean aggregate) {
 
         BoolQueryBuilder querySpec = QueryBuilders.boolQuery();
 
-        if (!StringUtils.isEmpty(country)) {
-            querySpec.must(QueryBuilders.termQuery("country", country));
+        if (!StringUtils.isEmpty(category)) {
+            querySpec.must(QueryBuilders.termQuery("category", category));
         }
 
-        if (!StringUtils.isEmpty(name)) {
-            querySpec.must(QueryBuilders.matchQuery("name", name));
+        if (!StringUtils.isEmpty(title)) {
+            querySpec.must(QueryBuilders.matchQuery("title", title));
         }
 
         if (!StringUtils.isEmpty(description)) {
@@ -74,17 +74,12 @@ public class DataAccessRepository {
             querySpec.must(QueryBuilders.matchAllQuery());
         }
 
-        //Filtro implicito
-        //No le pido al usuario que lo introduzca pero lo aplicamos proactivamente en todas las peticiones
-        //En este caso, que los productos sean visibles (estado correcto de la entidad)
-        querySpec.must(QueryBuilders.termQuery("visible", true));
-
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder().withQuery(querySpec);
 
-        if (aggregate) {
+        /* if (aggregate) {
             nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("Country Aggregation").field("country").size(1000));
             nativeSearchQueryBuilder.withMaxResults(0);
-        }
+        } */
 
         //Opcionalmente, podemos paginar los resultados
         //nativeSearchQueryBuilder.withPageable(PageRequest.of(0, 10));
@@ -99,14 +94,14 @@ public class DataAccessRepository {
             ParsedStringTerms countryAgg = (ParsedStringTerms) aggs.get("Country Aggregation");
 
             //Componemos una URI basada en serverFullAddress y query params para cada argumento, siempre que no viniesen vacios
-            String queryParams = getQueryParams(name, description, country);
+            String queryParams = getQueryParams(title, category, description);
             countryAgg.getBuckets()
                     .forEach(
                             bucket -> responseAggs.add(
                                     new AggregationDetails(
                                             bucket.getKey().toString(),
                                             (int) bucket.getDocCount(),
-                                            serverFullAddress + "/products?country=" + bucket.getKey() + queryParams)));
+                                            serverFullAddress + "/products?category=" + bucket.getKey() + queryParams)));
         }
         return new ProductsQueryResponse(result.getSearchHits().stream().map(SearchHit::getContent).toList(), responseAggs);
     }
@@ -119,8 +114,8 @@ public class DataAccessRepository {
      * @param country     - pais del producto
      * @return
      */
-    private String getQueryParams(String name, String description, String country) {
-        String queryParams = (StringUtils.isEmpty(name) ? "" : "&name=" + name)
+    private String getQueryParams(String title, String category, String description) {
+        String queryParams = (StringUtils.isEmpty(title) ? "" : "&title=" + title)
                 + (StringUtils.isEmpty(description) ? "" : "&description=" + description);
         // Eliminamos el ultimo & si existe
         return queryParams.endsWith("&") ? queryParams.substring(0, queryParams.length() - 1) : queryParams;

@@ -6,7 +6,7 @@ import com.unir.products.model.response.ProductsQueryResponse;
 
 public interface ProductsService {
 
-	ProductsQueryResponse getProducts(String name, String description, String country, Boolean aggregate);
+	ProductsQueryResponse getProducts(String title, String category, String description, Boolean aggregate);
 	
 	Product getProduct(String productId);
 	

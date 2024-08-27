@@ -58,7 +58,7 @@ public class DataAccessRepository {
         BoolQueryBuilder querySpec = QueryBuilders.boolQuery();
 
         if (!StringUtils.isEmpty(category)) {
-            querySpec.must(QueryBuilders.termQuery("category", category));
+            querySpec.must(QueryBuilders.matchQuery("category", category));
         }
 
         if (!StringUtils.isEmpty(title)) {

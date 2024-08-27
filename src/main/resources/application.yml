@@ -14,7 +14,7 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
   instance:
-    preferIpAdderss: false
+    preferIpAddress: false
     hostname: ${HOSTNAME:ms-inventory-products}
     non-secure-port-enabled: false
     secure-port-enabled: true

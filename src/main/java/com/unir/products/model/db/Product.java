@@ -24,19 +24,19 @@ public class Product {
 	@Id
 	private String id;
 
-	@Column(name = "title", unique = true)
+	@Field(type = FieldType.Text, name = "title")
 	private String title;
 
-	@Column(name = "price")
+	@Field(type = FieldType.Double, name = "price")
 	private Double price;
 
-	@Column(name = "description")
+	@Field(type = FieldType.Text, name = "description")
 	private String description;
 
-	@Column(name = "category")
+	@Field(type = FieldType.Text, name = "category")
 	private String category;
 
-	@Column(name = "image")
+	@Field(type = FieldType.Text, name = "image")
 	private String image;
 
 }

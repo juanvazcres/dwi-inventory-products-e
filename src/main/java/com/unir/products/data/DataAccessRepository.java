@@ -76,10 +76,10 @@ public class DataAccessRepository {
 
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder().withQuery(querySpec);
 
-        /* if (aggregate) {
-            nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("Country Aggregation").field("country").size(1000));
+        if (aggregate) {
+            nativeSearchQueryBuilder.addAggregation(AggregationBuilders.terms("Category Aggregation").field("category").size(1000));
             nativeSearchQueryBuilder.withMaxResults(0);
-        } */
+        }
 
         //Opcionalmente, podemos paginar los resultados
         //nativeSearchQueryBuilder.withPageable(PageRequest.of(0, 10));
@@ -91,7 +91,7 @@ public class DataAccessRepository {
 
         if (result.hasAggregations()) {
             Map<String, Aggregation> aggs = result.getAggregations().asMap();
-            ParsedStringTerms countryAgg = (ParsedStringTerms) aggs.get("Country Aggregation");
+            ParsedStringTerms countryAgg = (ParsedStringTerms) aggs.get("Category Aggregation");
 
             //Componemos una URI basada en serverFullAddress y query params para cada argumento, siempre que no viniesen vacios
             String queryParams = getQueryParams(title, category, description);

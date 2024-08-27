@@ -5,8 +5,8 @@ spring:
 
 ## Configuracion de Instancia 
 server:
-  port: 8088
-  ## fullAddress: ${HOST:http://localhost}:${PORT:${server.port}}
+  port: ${PORT:8088}
+  fullAddress: ${HOST:http://localhost:${server.port}}
 
 ## Configuracion del cliente de Eureka
 eureka:
@@ -14,15 +14,19 @@ eureka:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
   instance:
-    preferIpAddress: true
-    hostname: ms-inventory-products
+    preferIpAdderss: false
+    hostname: ${HOSTNAME:ms-inventory-products}
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    non-secure-port: 80
+    secure-port: 443
 
 ##Elasticsearch config
 elasticsearch:
-  host: ${ELASTICSEARCH_HOST}
+  host: ${ELASTICSEARCH_HOST:dwisearch-2706410038.us-east-1.bonsaisearch.net}
   credentials:
-    user: ${ELASTICSEARCH_USER}
-    password: ${ELASTICSEARCH_PWD}
+    user: ${ELASTICSEARCH_USER:eqmv6djf9z}
+    password: ${ELASTICSEARCH_PWD:dqedcjgvgy}
 logging:
   level:
     tracer: TRACE
